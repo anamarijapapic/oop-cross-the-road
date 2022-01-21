@@ -141,9 +141,7 @@ public:
 			else cout << "______________________________" << endl;
 			for (int j = 0; j < width; j++) {
 				if (roads[i]->CheckPosition(j) && i != 0 && i != numberOfRoadLanes - 1) {
-					int colorValue = rand() % 6;
-					if (colorValue == 0) colorValue = YELLOW;
-					color(colorValue);
+					color(rand() % 6 + 1);
 					cout << "X";
 					color(WHITE);
 				}
@@ -175,14 +173,8 @@ public:
 				numberOfRoadLanes++;
 			}
 
-			if (score > highscore) {
+			if (score > highscore)
 				highscore = score;
-				ofstream ofile;
-				ofile.open("Highscore.txt");
-				if (ofile.is_open())
-					ofile << highscore;
-				ofile.close();
-			}
 
 			player->y = 0;
 			mciSendString(TEXT("play Score.wav"), NULL, 0, NULL);
@@ -196,6 +188,12 @@ public:
 			Display();
 			Logic();
 		}
+
+		ofstream ofile;
+		ofile.open("Highscore.txt");
+		if (ofile.is_open())
+			ofile << highscore;
+		ofile.close();
 
 		mciSendString(TEXT("play Gameover.wav"), NULL, 0, NULL);
 		color(RED);
